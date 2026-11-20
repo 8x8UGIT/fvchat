@@ -99,57 +99,119 @@ footer span{color:#bbb}
 <footer id="contact"><div><strong>FRESHVIEW Foods Ltd</strong><br><span>Fresh seasonal produce, expertly selected and proudly delivered.</span></div><div id="news">01782 717806<br><span id="careers">Get in touch to find out more.</span></div></footer>
 
 <!-- 8x8 Chat: start -->
-<!-- Place this code snippet anywhere you want the button to appear in your page. If no button has been configured in the chat script, it will not show up nor take any space. -->
-    <div id="__8x8-chat-button-container-script_4013030936af74435a57372.79531240"></div>
+<!-- 8x8 Floating Chat Button Container -->
+<div id="__8x8-chat-button-container-script_4013030936af74435a57372.79531240"></div>
 
-    <!-- This script will not interfere with the button layout, you just need to include it in the same page. It must also be within the <body> section of the page, preferably just before the ending tag. -->
-    <script type="text/javascript">
-    (function(c, f, ef){
-        var typeofC = Object.prototype.toString.call(c);
-        var props = (typeofC === '[object Object]' && c) || {};
-        var cb = f || (typeofC === '[object Function]' && c);
-        var config = {
-            scriptUuid: "script_4013030936af74435a57372.79531240",
-            tenant: "ZnJlc2h2aWV3Zm9vZHMwMQ",
-            channelName: "Inbound chat",
-            channelUuid: "Yo2zGhO4QkG7s9yD3QHBcQ",
-            domain: "https://vcc-eu12.8x8.com",
-            buttonContainerId: "__8x8-chat-button-container-script_4013030936af74435a57372.79531240",
-            align: "right",
-        };
+<!-- Floating Chat Button Styling -->
+<style>
+    #__8x8-chat-button-container-script_4013030936af74435a57372\.79531240 {
+        position: fixed !important;
+        right: 20px !important;
+        bottom: 20px !important;
+        left: auto !important;
+        top: auto !important;
+        z-index: 999999 !important;
 
-        var url = new URL("https://cloud8-cc-geo.8x8.com/vcc-chat-channels/public/webchat/discovery");
-        var params = { domain: config.domain, tenant: config.tenant, channelUuid: config.channelUuid };
-        url.search = new URLSearchParams(params).toString();
-        fetch(url)
-            .then(response => response.json())
-            .then(data => config.domain = !data.domain ? config.domain : data.domain)
-            .catch(error => console.warn('Failed to retrieve override domain, will continue using ', config.domain, error))
-            .finally(() => loadChat());
+        /* Reduce the overall button size */
+        transform: scale(0.4) !important;
+        transform-origin: bottom right !important;
+    }
 
-        function loadChat() {
-            var se = document.createElement("script");
-            se.type = "text/javascript";
-            se.async = true;
-            se.src = props.loaderURL || (config.domain + "/CHAT/common/js/chatv3.js");
-            Object.keys(config).forEach(function (k) { se.dataset[k] = config[k] });
-            Object.keys(props).forEach(function (k) { se.dataset[k] = props[k] });
-            function handleInitEvent(e) {
-                var initFn = e.detail.init;
-                initFn(config, cb);
-                se.removeEventListener('init', handleInitEvent)
-            }
-            function handleErrorEvent(e) {
-                ef && ef(e);
-                se.removeEventListener('customerror', handleErrorEvent);
-            }
-            se.addEventListener('init', handleInitEvent);
-            se.addEventListener('customerror', handleErrorEvent);
-            var os = document.getElementsByTagName("script")[0];
-            os.parentNode.insertBefore(se, os);
+    /* Force smaller dimensions on the button */
+    #__8x8-chat-button-container-script_4013030936af74435a57372\.79531240 button {
+        width: 60px !important;
+        height: 60px !important;
+        min-width: 60px !important;
+        min-height: 60px !important;
+        max-width: 60px !important;
+        max-height: 60px !important;
+        padding: 0 !important;
+    }
+
+    /* Resize icons and images inside the button */
+    #__8x8-chat-button-container-script_4013030936af74435a57372\.79531240 img,
+    #__8x8-chat-button-container-script_4013030936af74435a57372\.79531240 svg {
+        max-width: 100% !important;
+        max-height: 100% !important;
+    }
+
+    /* Mobile positioning */
+    @media (max-width: 600px) {
+        #__8x8-chat-button-container-script_4013030936af74435a57372\.79531240 {
+            right: 12px !important;
+            bottom: 12px !important;
         }
-    })();
-    </script>
+    }
+</style>
+
+<!-- 8x8 Webchat Script -->
+<script type="text/javascript">
+(function(c, f, ef){
+    var typeofC = Object.prototype.toString.call(c);
+    var props = (typeofC === '[object Object]' && c) || {};
+    var cb = f || (typeofC === '[object Function]' && c);
+    var config = {
+        scriptUuid: "script_4013030936af74435a57372.79531240",
+        tenant: "ZnJlc2h2aWV3Zm9vZHMwMQ",
+        channelName: "Inbound chat",
+        channelUuid: "Yo2zGhO4QkG7s9yD3QHBcQ",
+        domain: "https://vcc-eu12.8x8.com",
+        buttonContainerId: "__8x8-chat-button-container-script_4013030936af74435a57372.79531240",
+        align: "right",
+    };
+
+    var url = new URL("https://cloud8-cc-geo.8x8.com/vcc-chat-channels/public/webchat/discovery");
+    var params = {
+        domain: config.domain,
+        tenant: config.tenant,
+        channelUuid: config.channelUuid
+    };
+
+    url.search = new URLSearchParams(params).toString();
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => config.domain = !data.domain ? config.domain : data.domain)
+        .catch(error => console.warn(
+            'Failed to retrieve override domain, will continue using ',
+            config.domain,
+            error
+        ))
+        .finally(() => loadChat());
+
+    function loadChat() {
+        var se = document.createElement("script");
+        se.type = "text/javascript";
+        se.async = true;
+        se.src = props.loaderURL || (config.domain + "/CHAT/common/js/chatv3.js");
+
+        Object.keys(config).forEach(function (k) {
+            se.dataset[k] = config[k];
+        });
+
+        Object.keys(props).forEach(function (k) {
+            se.dataset[k] = props[k];
+        });
+
+        function handleInitEvent(e) {
+            var initFn = e.detail.init;
+            initFn(config, cb);
+            se.removeEventListener('init', handleInitEvent);
+        }
+
+        function handleErrorEvent(e) {
+            ef && ef(e);
+            se.removeEventListener('customerror', handleErrorEvent);
+        }
+
+        se.addEventListener('init', handleInitEvent);
+        se.addEventListener('customerror', handleErrorEvent);
+
+        var os = document.getElementsByTagName("script")[0];
+        os.parentNode.insertBefore(se, os);
+    }
+})();
+</script>
 <!-- 8x8 Chat: end -->
 </body>
 </html>
